@@ -37,6 +37,7 @@ public class RobotMap {
 	public static Spark DriveLII;
 	public static Spark DriveRI;
 	public static Spark DriveRII;
+	public static Spark Intake;
 	public static WPI_TalonSRX IXBar;
 	public static WPI_TalonSRX Lift;
 	public static SpeedControllerGroup m_left;
@@ -49,6 +50,7 @@ public class RobotMap {
 	public static AHRS navX;
 	public static CameraServer cam1;
 	public static DigitalInput LimIX; //Attach magnets to gear/sprocket with epoxy?
+	public static DigitalInput CubeSense;
 	
 	public static int dTELeftReset = 0;
 	public static int dTERightReset = 0;

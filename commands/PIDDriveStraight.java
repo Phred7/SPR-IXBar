@@ -1,36 +1,89 @@
 package org.usfirst.frc.team2906.robot.commands;
 
+import org.usfirst.frc.team2906.robot.Robot;
+import org.usfirst.frc.team2906.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class PIDDriveStraight extends Command {
 
-    public PIDDriveStraight() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
+	double motorSpeed = .15;
+	double direction = 0;
+	double currentAngle = 0;
+	double distance = 0;
+	double error = 0;
+	double errorB = 0;
+	double pAdjustment = 0;
+	double iAdjustment = 0;
+	double dAdjustment = 0;
+	double lastError = 0;
+	double PIDAdjustment = 0;
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public PIDDriveStraight(double motorSpeed, double direction, double distance) {
+		this.motorSpeed = -1 * motorSpeed;
+		this.direction = direction;
+		this.distance = distance * RobotMap.encoderCountsLeftToIn;
+		requires(Robot.driveWC);
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    }
+	protected void initialize() {
+		Robot.driveWC.resetEncs();
+		Robot.navX.resetNavX();
+		dAdjustment = 0;
+		if (motorSpeed > 0) {
+			// iAdjustment = 0.25;
+			// practiceBotForward();
+		} else {
+			// practiceBotBack();
+		}
+		iAdjustment = 0;
+		pAdjustment = 0;
+		error = 0;
+		lastError = 0;
+		PIDAdjustment = 0;
+		errorB = 0;
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	protected void execute() {
+		currentAngle = Robot.navX.getNavXAngle();
+		error = direction - currentAngle;
+		pAdjustment = (direction - currentAngle) * RobotMap.PIDDriveStraightP * RobotMap.PIDDriveStraightGainMultiplier;
+		iAdjustment = iAdjustment + (error * RobotMap.PIDDriveStraightI * RobotMap.PIDDriveStraightGainMultiplier);
+		dAdjustment = (error - lastError) * RobotMap.PIDDriveStraightD * RobotMap.PIDDriveStraightGainMultiplier;
+		lastError = error;
+		PIDAdjustment = pAdjustment + iAdjustment + dAdjustment;
+		SmartDashboard.putNumber("d-error", error);
+		SmartDashboard.putNumber("distance error", lastError);
+		SmartDashboard.putNumber("travel distance", this.distance);
+		SmartDashboard.putNumber("Integral", iAdjustment);
+		Robot.driveWC.driveR(-(motorSpeed) - PIDAdjustment);
+		Robot.driveWC.driveL(motorSpeed - PIDAdjustment);
+		SmartDashboard.putNumber("IAdjustment", iAdjustment);
+		SmartDashboard.putNumber("PID Adjustment", PIDAdjustment);
+		SmartDashboard.putNumber("errorB", errorB);
+		SmartDashboard.putBoolean("Collission", Robot.navX.collisionDetection());
+		SmartDashboard.putNumber("x velocity", Robot.navX.getXVelocity());
+		SmartDashboard.putNumber("y velocity", Robot.navX.getYVelocity());
+		SmartDashboard.putNumber("z velocity", Robot.navX.getZVelocity());
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	protected boolean isFinished() {
+		return (Math.abs(Robot.driveWC.getLSoftEnc()) > ((Math.abs(distance /*- .5*/)))); // &&
+																			// +
+																							// .5)))));
+	}
+
+	protected void end() {
+		SmartDashboard.putNumber("i", iAdjustment);
+		Robot.driveWC.stop();
+	}
+
+	protected void interrupted() {
+		end();
+	}
 }

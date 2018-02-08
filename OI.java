@@ -24,9 +24,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 	public Joystick joystick1;
 	public Joystick joystick2;
+	public Joystick joystick3;
 	
 	public JoystickButton trigr1;
 	public JoystickButton trigr2;
+	public JoystickButton trigr3;
 	public JoystickButton B11;
 	public JoystickButton B12;
 	public JoystickButton B3;

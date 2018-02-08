@@ -1,6 +1,10 @@
 package org.usfirst.frc.team2906.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import org.usfirst.frc.team2906.robot.RobotMap;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,7 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Limelight extends Subsystem {
+	
 	NetworkTable table;
+	Relay visionLEDs = RobotMap.leds;
 
 	// Create variables
 	double targetD;
@@ -75,7 +81,15 @@ public class Limelight extends Subsystem {
 		pipeline = table.getEntry("pipeline").getDouble(0);
 		return pipeline;
 	}
+	
+	public void Lon() {
+		visionLEDs.set(Relay.Value.kForward);
+	}
 
+	public void Loff() {
+		visionLEDs.set(Relay.Value.kOff);
+	}
+	
 	public void switchLED() {
 		if (getLEDMode() == 0) {
 			table.getEntry("ledMode").setDouble(1);

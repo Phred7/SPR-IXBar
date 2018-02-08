@@ -4,23 +4,24 @@ import org.usfirst.frc.team2906.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ *
+ */
+public class Stop extends Command {
 
-public class RSet extends Command {
-
-    public RSet() {
-        requires(Robot.pneumatics);
+    public Stop() {
+        requires(Robot.driveWC);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-    	Robot.pneumatics.Activate();
-    	Robot.pneumatics.Retract();
+    	Robot.driveWC.stop();
     }
 
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     protected void end() {

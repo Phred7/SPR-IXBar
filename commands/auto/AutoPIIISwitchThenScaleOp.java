@@ -1,16 +1,15 @@
-package org.usfirst.frc.team2906.robot.commands;
-
-import org.usfirst.frc.team2906.robot.Robot;
+package org.usfirst.frc.team2906.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class LEDsOn extends Command {
+public class AutoPIIISwitchThenScaleOp extends Command {
 
-    public LEDsOn() {
-        requires(Robot.limelight);
+    public AutoPIIISwitchThenScaleOp() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +18,6 @@ public class LEDsOn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.limelight.Lon();
     }
 
     // Make this return true when this Command no longer needs to run execute()
