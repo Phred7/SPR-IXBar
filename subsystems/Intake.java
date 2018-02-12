@@ -43,6 +43,9 @@ public class Intake extends Subsystem {
 		motor.set(0.0);
 	}
 	
+	public double GetSpeed() {
+		return motor.get();
+	}
 	public boolean GetSense() {
 		return sense.get();
 	}

@@ -9,18 +9,19 @@ package org.usfirst.frc.team2906.robot;
 
 import org.usfirst.frc.team2906.robot.commands.Activate;
 import org.usfirst.frc.team2906.robot.commands.Deactivate;
+import org.usfirst.frc.team2906.robot.commands.DriveArcade;
 import org.usfirst.frc.team2906.robot.commands.Extend;
-import org.usfirst.frc.team2906.robot.commands.LEDsOff;
-import org.usfirst.frc.team2906.robot.commands.LEDsOn;
+import org.usfirst.frc.team2906.robot.commands.IXBarDrive;
+import org.usfirst.frc.team2906.robot.commands.IXBarStop;
+import org.usfirst.frc.team2906.robot.commands.LEDs;
+import org.usfirst.frc.team2906.robot.commands.LiftDrive;
+import org.usfirst.frc.team2906.robot.commands.LiftStop;
 import org.usfirst.frc.team2906.robot.commands.Retract;
+import org.usfirst.frc.team2906.robot.commands.Stop;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-/**
- * This class is the glue that binds the controls on the physical operator
- * interface to the commands and command groups that allow control of the robot.
- */
 public class OI {
 	public Joystick joystick1;
 	public Joystick joystick2;
@@ -37,10 +38,11 @@ public class OI {
 	public OI(){
 		joystick1 = new Joystick(0);
 		joystick2 = new Joystick(1);
+		joystick3 = new Joystick(2);
 		
 		trigr1 = new JoystickButton(joystick1, 1);
-		trigr1.whileHeld(new LEDsOn());
-		trigr1.whenReleased(new LEDsOff());
+		trigr1.whileHeld(new DriveArcade());
+		trigr1.whenReleased(new Stop());
 		
 		B11 = new JoystickButton(joystick1, 11);
 		B11.whenPressed(new Extend());
@@ -54,6 +56,13 @@ public class OI {
 		B4 = new JoystickButton(joystick1, 4);
 		B4.whileHeld(new Deactivate());
 		
+		trigr2 = new JoystickButton(joystick2, 1);
+		trigr2.whileHeld(new IXBarDrive());
+		trigr2.whenReleased(new IXBarStop());
+		
+		trigr3 = new JoystickButton(joystick3, 1);
+		trigr3.whileHeld(new LiftDrive());
+		trigr3.whenReleased(new LiftStop());
 		
 		
 	}
@@ -102,6 +111,25 @@ public class OI {
     public double getJoystick2X(){
     	if(Math.abs(joystick2.getY())>RobotMap.sensitivity){
     		return .4*joystick2.getY();
+    	} 
+    	else {
+    		return 0.0;
+    	}
+    }
+    public Joystick getJoystick3(){
+    	return joystick3;
+    }
+    public double getJoystick3Y(){
+    	if(Math.abs(joystick3.getY())>RobotMap.sensitivity){
+    		return .4*joystick3.getY();
+    	} 
+    	else {
+    		return 0.0;
+    	}
+    }
+    public double getJoystick3X(){
+    	if(Math.abs(joystick3.getY())>RobotMap.sensitivity){
+    		return .4*joystick3.getY();
     	} 
     	else {
     		return 0.0;

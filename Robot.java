@@ -300,6 +300,7 @@ public class Robot extends TimedRobot {
 
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putString("Auto", "AutoMode:" + autoModeType);
 		SmartDashboard.putNumber("navx angle", RobotMap.navX.getAngle());
 		SmartDashboard.putNumber("navx pitch", RobotMap.navX.getPitch());
 		SmartDashboard.putNumber("navx roll", RobotMap.navX.getRoll());
