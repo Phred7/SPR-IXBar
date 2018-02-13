@@ -52,7 +52,8 @@ public class RobotMap {
 	public static Solenoid Spring;
 	public static AHRS navX;
 	public static CameraServer cam1;
-	public static DigitalInput LimIX; //Attach magnets to gear/sprocket with epoxy?
+	public static DigitalInput LimIXTop; //Attach magnets to gear/sprocket with epoxy?
+	public static DigitalInput LimIXBottom;
 	public static DigitalInput CubeSense;
 	
 	public static int dTELeftReset = 0;
@@ -154,8 +155,9 @@ public class RobotMap {
 		DTELeft = new Encoder(0, 1);
 		DTERight = new Encoder(2, 3);
 		
-		LimIX = new DigitalInput(9);
-		CubeSense = new DigitalInput(8);
+		LimIXTop = new DigitalInput(9);
+		LimIXBottom = new DigitalInput(8);
+		CubeSense = new DigitalInput(7);
 		
 		pnueCompressor = new Compressor(0);
 		
