@@ -16,6 +16,8 @@ import org.usfirst.frc.team2906.robot.commands.IXBarStop;
 import org.usfirst.frc.team2906.robot.commands.LEDs;
 import org.usfirst.frc.team2906.robot.commands.LiftDrive;
 import org.usfirst.frc.team2906.robot.commands.LiftStop;
+import org.usfirst.frc.team2906.robot.commands.LimeLEDsOff;
+import org.usfirst.frc.team2906.robot.commands.LimeLEDsOn;
 import org.usfirst.frc.team2906.robot.commands.Retract;
 import org.usfirst.frc.team2906.robot.commands.Stop;
 
@@ -51,9 +53,11 @@ public class OI {
 		B12.whenPressed(new Retract());
 		
 		B3 = new JoystickButton(joystick1, 3);
+		B3.whenPressed(new LimeLEDsOn());
 		B3.whileHeld(new Activate());
 		
 		B4 = new JoystickButton(joystick1, 4);
+		B4.whenPressed(new LimeLEDsOff());
 		B4.whileHeld(new Deactivate());
 		
 		trigr2 = new JoystickButton(joystick2, 1);

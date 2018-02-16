@@ -27,6 +27,9 @@ public class Limelight extends Subsystem {
 	double LEDMode;
 	double camMode;
 	double pipeline;
+	double snapshot;
+	double angle;
+	double Tdistance;
 
 	public Limelight() {
 		table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -116,5 +119,27 @@ public class Limelight extends Subsystem {
 	public void setPipeline(double pipeline) {
 		table.getEntry("pipeline").setDouble(pipeline);
 		SmartDashboard.putNumber("Camera Mode", pipeline);
+	}
+	
+	public double getSnapshot() {
+		snapshot = table.getEntry("snapshot").getDouble(0);
+		return snapshot;
+	}
+	
+	public void switchSnapshot() {
+		if (getSnapshot() == 0) {
+			table.getEntry("snapshot").setDouble(1);
+		} else if (getSnapshot() == 1) {
+			table.getEntry("snapshot").setDouble(0);
+		}
+	}
+	
+	public double offsetAngle() {
+		angle = Math.atan2(1,xOffset);
+		return angle;
+	}
+	
+	public double TargetDistance() {
+		Tdistance = Math.
 	}
 }

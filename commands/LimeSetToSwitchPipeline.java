@@ -1,16 +1,15 @@
 package org.usfirst.frc.team2906.robot.commands;
 
-import org.usfirst.frc.team2906.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class IntakeStop extends Command {
+public class LimeSetToSwitchPipeline extends Command {
 
-    public IntakeStop() {
-        requires(Robot.intake);
+    public LimeSetToSwitchPipeline() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +18,6 @@ public class IntakeStop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.Stop();
     }
 
     // Make this return true when this Command no longer needs to run execute()

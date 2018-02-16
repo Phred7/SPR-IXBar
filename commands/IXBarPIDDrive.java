@@ -4,7 +4,6 @@ import org.usfirst.frc.team2906.robot.Robot;
 import org.usfirst.frc.team2906.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class IXBarPIDDrive extends Command {
 

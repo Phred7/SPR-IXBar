@@ -51,7 +51,7 @@ public class Intake extends Subsystem {
 	}
 
     public void initDefaultCommand() {
-    	Robot.intake.Stop();
+    	
     }
 }
 

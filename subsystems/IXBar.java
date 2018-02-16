@@ -42,32 +42,32 @@ public class IXBar extends Subsystem {
 	public static final int TOLERANCE = 0;
 	public static final double F = 0.0, P = 0.1, I = 0.0, D = 0.0; 
 	
-	public void IXBar(int locationDegs) {
-		//motor.configForwardLimitSwitchSource(LimitSwitchSource.valueOf(magT), LimitSwitchNormal.NormallyOpen, );
+	public void IXBar() {
+		/*//motor.configForwardLimitSwitchSource(LimitSwitchSource.valueOf(magT), LimitSwitchNormal.NormallyOpen, );
 		this.motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 		this.motor.setSensorPhase(false);
 		
-		/* get the decoded pulse width encoder position, 4096 units per rotation */
+		// get the decoded pulse width encoder position, 4096 units per rotation 
 		int pulseWidthPos = motor.getSensorCollection().getPulseWidthPosition();
-		/* get the pulse width in us, rise-to-fall in microseconds */
+		// get the pulse width in us, rise-to-fall in microseconds 
 		int pulseWidthUs = motor.getSensorCollection().getPulseWidthRiseToFallUs();
-		/* get the period in us, rise-to-rise in microseconds */
+		// get the period in us, rise-to-rise in microseconds 
 		int periodUs = motor.getSensorCollection().getPulseWidthRiseToRiseUs();
-		/* get measured velocity in units per 100ms, 4096 units is one rotation */
+		// get measured velocity in units per 100ms, 4096 units is one rotation 
 		int pulseWidthVel = motor.getSensorCollection().getPulseWidthVelocity();
-		/* is sensor plugged in to Talon */
+		// is sensor plugged in to Talon 
 		boolean sensorPluggedIn = false;
 		if (periodUs != 0) {
 		sensorPluggedIn = true;
 		}
 		
-		/* +14 rotations forward when using CTRE Mag encoder */
+		// +14 rotations forward when using CTRE Mag encoder 
 		motor.configForwardSoftLimitThreshold(+1*4096, 10);
-		/* -15 rotations reverse when using CTRE Mag encoder */
+		// -15 rotations reverse when using CTRE Mag encoder 
 		motor.configReverseSoftLimitThreshold(-1*4096, 10);
 		motor.configForwardSoftLimitEnable(true, 10);
 		motor.configReverseSoftLimitEnable(true, 10);
-		/* pass false to FORCE OFF the feature. Otherwise the enable flags above are honored */
+		// pass false to FORCE OFF the feature. Otherwise the enable flags above are honored 
 		motor.overrideLimitSwitchesEnable(true);
 		
 		motor.selectProfileSlot(Slot, 0);
@@ -76,7 +76,7 @@ public class IXBar extends Subsystem {
 		motor.config_kI(Slot, kI, Timeout);
 		motor.config_kD(Slot, kD, Timeout);
 		motor.config_IntegralZone(0, 100, Timeout);
-		
+		*/
 	}
 	
 	public void drivePID(double targetPosition) {
@@ -114,7 +114,7 @@ public class IXBar extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
-        Robot.ixBar.IXBar(0);
+        Robot.ixBar.IXBar();
     }
 }
 

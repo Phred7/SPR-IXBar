@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakeStop extends Command {
+public class LimeLEDsOn extends Command {
 
-    public IntakeStop() {
-        requires(Robot.intake);
+    public LimeLEDsOn() {
+        requires(Robot.limelight);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +19,9 @@ public class IntakeStop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.Stop();
+    	if (Robot.limelight.getLEDMode() == 1) {
+    		Robot.limelight.switchLED();
+    	} 
     }
 
     // Make this return true when this Command no longer needs to run execute()

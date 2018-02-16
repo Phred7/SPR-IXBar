@@ -109,17 +109,51 @@ public class RobotMap {
 	public static double kDL = 0.0;
 	
 	public static void init(){
-		DriveLI = new Spark(1);
-		DriveLII = new Spark(2);
-		DriveRI = new Spark(3);
-		DriveRII = new Spark(4);
-		IXBar = new WPI_TalonSRX(0);
-		IXBarSlave = new WPI_TalonSRX(1);
-		Lift = new WPI_TalonSRX(2);
-		LiftSlave = new WPI_TalonSRX(3);
+		DriveLI = new Spark(0);
+		DriveLII = new Spark(1);
+		DriveRI = new Spark(2);
+		DriveRII = new Spark(3);
+		IXBar = new WPI_TalonSRX(1);
+		IXBarSlave = new WPI_TalonSRX(2);
+		Lift = new WPI_TalonSRX(3);
+		LiftSlave = new WPI_TalonSRX(4);
 		
 		LiftSlave.follow(Lift);
 		IXBarSlave.follow(IXBar);
+		
+		IXBar.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+		IXBar.setSensorPhase(false);
+		
+		// get the decoded pulse width encoder position, 4096 units per rotation 
+		int pulseWidthPos = IXBar.getSensorCollection().getPulseWidthPosition();
+		// get the pulse width in us, rise-to-fall in microseconds 
+		int pulseWidthUs = IXBar.getSensorCollection().getPulseWidthRiseToFallUs();
+		// get the period in us, rise-to-rise in microseconds 
+		int periodUs = IXBar.getSensorCollection().getPulseWidthRiseToRiseUs();
+		// get measured velocity in units per 100ms, 4096 units is one rotation 
+		int pulseWidthVel = IXBar.getSensorCollection().getPulseWidthVelocity();
+		// is sensor plugged in to Talon 
+		boolean sensorPluggedIn = false;
+		if (periodUs != 0) {
+		sensorPluggedIn = true;
+		}
+		
+		// +14 rotations forward when using CTRE Mag encoder 
+		IXBar.configForwardSoftLimitThreshold(+1*4096, 10);
+		// -15 rotations reverse when using CTRE Mag encoder 
+		IXBar.configReverseSoftLimitThreshold(-1*4096, 10);
+		IXBar.configForwardSoftLimitEnable(true, 10);
+		IXBar.configReverseSoftLimitEnable(true, 10);
+		// pass false to FORCE OFF the feature. Otherwise the enable flags above are honored 
+		IXBar.overrideLimitSwitchesEnable(true);
+		
+		IXBar.selectProfileSlot(kSlotIdxIX, 0);
+		IXBar.config_kF(kSlotIdxIX, kFIX, kTimeoutMsIX);
+		IXBar.config_kP(kSlotIdxIX, kPIX, kTimeoutMsIX);
+		IXBar.config_kI(kSlotIdxIX, kIIX, kTimeoutMsIX);
+		IXBar.config_kD(kSlotIdxIX, kDIX, kTimeoutMsIX);
+		IXBar.config_IntegralZone(0, 100, kTimeoutMsIX);
+		
 		
 		Lift.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, RobotMap.kTimeoutMsL);
 		Lift.setSensorPhase(true); //set the peak, nominal outputs */
