@@ -111,6 +111,7 @@ public class Robot extends TimedRobot {
 	}
 
 	public void autonomousInit() {
+		Robot.ixBar.clearE();
 		/*
 		 * m_m_autonomousCommand = (Command) chooser.getSelected();
 		 * System.out.println("Auto selected: " + chooser.getSelected());
@@ -324,6 +325,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("x velocity", Robot.navX.getXVelocity());
 		SmartDashboard.putNumber("y velocity", Robot.navX.getYVelocity());
 		SmartDashboard.putNumber("z velocity", Robot.navX.getZVelocity());
+		SmartDashboard.putNumber("IXBar Position", Robot.ixBar.getCurrentPosition());
 	}
 
 	public void testPeriodic() {

@@ -25,7 +25,7 @@ public class PIDDriveStraight extends Command {
 
 	public PIDDriveStraight(double motorSpeed, double direction, double distance) {
 		this.motorSpeed = -1 * motorSpeed;
-		this.direction = direction;
+		this.direction = 1 * direction; //this.direction = -1 * direction; //for upside down navX
 		this.distance = distance * RobotMap.encoderCountsLeftToIn;
 		requires(Robot.driveWC);
 	}

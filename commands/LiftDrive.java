@@ -19,7 +19,7 @@ public class LiftDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lift.drive(Robot.oi.getJoystick3Y());
+    	Robot.lift.drive(Robot.oi.getJoystick3Y()/10);
     }
 
     // Make this return true when this Command no longer needs to run execute()

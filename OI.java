@@ -9,6 +9,8 @@ package org.usfirst.frc.team2906.robot;
 
 import org.usfirst.frc.team2906.robot.commands.Activate;
 import org.usfirst.frc.team2906.robot.commands.Deactivate;
+import org.usfirst.frc.team2906.robot.commands.DoubleExtendDelay;
+import org.usfirst.frc.team2906.robot.commands.DoubleRetractDelay;
 import org.usfirst.frc.team2906.robot.commands.DriveArcade;
 import org.usfirst.frc.team2906.robot.commands.Extend;
 import org.usfirst.frc.team2906.robot.commands.IXBarDrive;
@@ -42,15 +44,15 @@ public class OI {
 		joystick2 = new Joystick(1);
 		joystick3 = new Joystick(2);
 		
-		trigr1 = new JoystickButton(joystick1, 1);
+		/*trigr1 = new JoystickButton(joystick1, 1);
 		trigr1.whileHeld(new DriveArcade());
-		trigr1.whenReleased(new Stop());
+		trigr1.whenReleased(new Stop());*/
 		
 		B11 = new JoystickButton(joystick1, 11);
-		B11.whenPressed(new Extend());
+		B11.whenPressed(new DoubleExtendDelay());
 		
 		B12 = new JoystickButton(joystick1, 12);
-		B12.whenPressed(new Retract());
+		B12.whenPressed(new DoubleRetractDelay());
 		
 		B3 = new JoystickButton(joystick1, 3);
 		B3.whenPressed(new LimeLEDsOn());
@@ -95,6 +97,24 @@ public class OI {
     public double getJoystick1R(){
     	if(Math.abs(joystick1.getRawAxis(2))>RobotMap.sensitivity){
     		return -1*joystick1.getRawAxis(2);
+    	} 
+    	else {
+    		return 0.0;
+    	}
+    }
+    
+    public double getJoystick1Y1(){
+    	if(Math.abs(joystick1.getRawAxis(0))>RobotMap.sensitivity){
+    		return 1*joystick1.getRawAxis(0);
+    	} 
+    	else {
+    		return 0.0;
+    	}
+    }
+    
+    public double getJoystick1Y2(){
+    	if(Math.abs(joystick1.getRawAxis(2))>RobotMap.sensitivity){
+    		return 1*joystick1.getRawAxis(2);
     	} 
     	else {
     		return 0.0;

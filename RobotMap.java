@@ -38,7 +38,8 @@ public class RobotMap {
 	public static Spark DriveLII;
 	public static Spark DriveRI;
 	public static Spark DriveRII;
-	public static Spark Intake;
+	public static Spark IntakeR;
+	public static Spark IntakeL;
 	public static WPI_TalonSRX IXBar;
 	public static WPI_TalonSRX IXBarSlave;
 	public static WPI_TalonSRX Lift;
@@ -48,13 +49,14 @@ public class RobotMap {
 	public static Relay leds;
 	public static Encoder DTELeft;
 	public static Encoder DTERight;
+	public static Encoder IXE;
 	public static DoubleSolenoid Extension;
-	public static Solenoid Spring;
+	public static DoubleSolenoid ExtraIn;
 	public static AHRS navX;
 	public static CameraServer cam1;
 	public static DigitalInput LimIXTop; //Attach magnets to gear/sprocket with epoxy?
 	public static DigitalInput LimIXBottom;
-	public static DigitalInput CubeSense;
+	public static DigitalInput LimIXPistonC; //tells the piston to retract if activated up (+1/-1)
 	
 	public static int dTELeftReset = 0;
 	public static int dTERightReset = 0;
@@ -86,7 +88,7 @@ public class RobotMap {
 	
 	//CONSTANTS FOR TALONS SRX ENCODERS
 	
-	//IXBar (POSITION)
+	//IXBar (POSITION) - encoder not functioning propperly
 	public static final int kSlotIdxIX = 0;  //Which PID slot to pull gains from. Starting 2018, you can choose from 0,1,2 or 3. Only the first two (0,1) are visible in web-based configuration.
 	public static final int kPIDLoopIdxIX = 0; //Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops. For now we just want the primary one.
 	public static final int kTimeoutMsIX = 10; // set to zero to skip waiting for confirmation, set to nonzero to wait andreport to DS if action fails.
@@ -99,7 +101,7 @@ public class RobotMap {
 	public static double GRIX = (42/12); //ex: if you want to move 90degs you would multiplie 90 by 42/12 to get a total movement of the output shaft at 315degs
 	
 	
-	//LIFT (VELOCITY)
+	//LIFT (VELOCITY) //Change to position!!!
 	public static final int kSlotIdxL = 0; //Which PID slot to pull gains from. Starting 2018, you can choose from 0,1,2 or 3. Only the first two (0,1) are visible in web-based configuration.	 
 	public static final int kPIDLoopIdxL = 0; //Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops. For now we just want the primary one.
 	public static final int kTimeoutMsL = 10; //set to zero to skip waiting for confirmation, set to nonzero to wait andreport to DS if action fails.
@@ -113,6 +115,8 @@ public class RobotMap {
 		DriveLII = new Spark(1);
 		DriveRI = new Spark(2);
 		DriveRII = new Spark(3);
+		IntakeR = new Spark(4);
+		IntakeL = new Spark(5);
 		IXBar = new WPI_TalonSRX(1);
 		IXBarSlave = new WPI_TalonSRX(2);
 		Lift = new WPI_TalonSRX(3);
@@ -188,15 +192,15 @@ public class RobotMap {
 		
 		DTELeft = new Encoder(0, 1);
 		DTERight = new Encoder(2, 3);
+		IXE = new Encoder(4, 5);
 		
 		LimIXTop = new DigitalInput(9);
 		LimIXBottom = new DigitalInput(8);
-		CubeSense = new DigitalInput(7);
+		LimIXPistonC = new DigitalInput(7);
 		
 		pnueCompressor = new Compressor(0);
 		
-		Extension = new DoubleSolenoid(0, 0, 1);
-		Spring = new Solenoid(0, 2);
+		Extension = new DoubleSolenoid(0, 1, 2);
 		
 		/*CameraServer server1 = CameraServer.getInstance();
 		server1.startAutomaticCapture();*/

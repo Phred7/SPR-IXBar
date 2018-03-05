@@ -12,42 +12,45 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Intake extends Subsystem {
 
-	Spark motor = RobotMap.Intake;
-	DigitalInput sense = RobotMap.CubeSense;
+	Spark motorR = RobotMap.IntakeR;
+	Spark motorL = RobotMap.IntakeL;
 	
 	public void Intake() {
 		
 	}
 	
 	public void intake(Double speed) {
-		motor.set(speed);
+		motorR.set(speed);
+		motorL.set(-speed);
 	}
 	
 	public void InFull() {
-		motor.set(1.0);
+		motorR.set(-1.0);
+		motorL.set(1.0);
 	}
 	
 	public void OutFull() {
-		motor.set(-1.0);
+		motorR.set(1.0);
+		motorL.set(-1.0);
 	}
 	
 	public void In50() {
-		motor.set(0.5);
+		motorR.set(-0.5);
+		motorL.set(0.5);
 	}
 	
 	public void Out50() {
-		motor.set(-0.5);
+		motorR.set(0.5);
+		motorL.set(-0.5);
 	}
 	
 	public void Stop() {
-		motor.set(0.0);
+		motorR.set(0.0);
+		motorL.set(0.0);
 	}
 	
 	public double GetSpeed() {
-		return motor.get();
-	}
-	public boolean GetSense() {
-		return sense.get();
+		return motorR.get();
 	}
 
     public void initDefaultCommand() {

@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveArcade extends Command {
+public class DriveTank extends Command {
 
-    public DriveArcade() {
+    public DriveTank() {
     	requires(Robot.driveWC);
 	}
 
@@ -17,7 +17,7 @@ public class DriveArcade extends Command {
 	}
 
 	protected void execute() {
-			Robot.driveWC.arcadeDrive(Robot.oi.getJoystick1X(), -Robot.oi.getJoystick1Y());
+			Robot.driveWC.tankDrive(Robot.oi.getJoystick1Y1(), Robot.oi.getJoystick1Y2());
 		}
 
 	protected boolean isFinished() {

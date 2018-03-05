@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Pneumatics extends Subsystem {
 
     DoubleSolenoid E = RobotMap.Extension;
-    Solenoid S = RobotMap.Spring;
+    DoubleSolenoid S = RobotMap.ExtraIn;
 
     public void Extend() {
     	E.set(Value.kForward);
@@ -24,16 +24,16 @@ public class Pneumatics extends Subsystem {
     }
     
     public void Activate() {
-    	S.set(true);
+    	S.set(Value.kForward);
     }
     
     public void Deactivate() {
-    	S.set(false);
+    	S.set(Value.kReverse);
     }
     
     public void RSet() {
     	E.set(Value.kReverse);
-    	S.set(false);
+    	S.set(Value.kForward);
     }
     
     public void initDefaultCommand() {

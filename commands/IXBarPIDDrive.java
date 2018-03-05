@@ -28,7 +28,7 @@ public class IXBarPIDDrive extends Command {
     	//SmartDashboard.putNumber("IXAngle: ", Robot.ixBar.getCurrentPosition());
     	//SmartDashboard.putNumber("IXError: ", Robot.ixBar.getCurrentError());
     	//SmartDashboard.putNumber("IXTarget: ", Robot.ixBar.getTargetDegrees());
-    	Target = (LD * ((4096*GR)/360));
+    	Target = (LD * ((4096*GR)/360)/1000);
     	//Target = (Robot.oi.getJoystick2Y()) * 4096;
     	Robot.ixBar.drivePID(Target);
     	

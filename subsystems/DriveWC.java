@@ -3,6 +3,7 @@ package org.usfirst.frc.team2906.robot.subsystems;
 import org.usfirst.frc.team2906.robot.Robot;
 import org.usfirst.frc.team2906.robot.RobotMap;
 import org.usfirst.frc.team2906.robot.commands.DriveArcade;
+import org.usfirst.frc.team2906.robot.commands.DriveTank;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -112,11 +113,12 @@ public class DriveWC extends Subsystem {
 
 	
 	public void arcadeDrive(double xSpeed, double zRotate) {
-		driveWC.arcadeDrive(xSpeed, zRotate);
+		driveWC.arcadeDrive(xSpeed, -zRotate);
 	}
 	
     public void initDefaultCommand() {
-    	setDefaultCommand(new DriveArcade());
+    	//setDefaultCommand(new DriveArcade());
+    	setDefaultCommand(new DriveTank());
     }
 }
 
