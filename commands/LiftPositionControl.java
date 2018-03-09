@@ -7,23 +7,23 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LEDs extends Command {
+public class LiftPositionControl extends Command {
 
-    public LEDs() {
-        requires(Robot.limelight);
+	int Cpos;
+	
+    public LiftPositionControl() {
+        requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Cpos = Robot.lift.getCurrentPosition();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    /*	if (Robot.intake.GetSense() == true && Robot.intake.GetSpeed() > 0.1) {
-    		Robot.limelight.Lon();
-    	} else if(Robot.intake.GetSense() == false || Robot.intake.GetSpeed() < 0.1) {
-    		Robot.limelight.Loff();
-    	}*/
+    	Robot.lift.PositionControl(Cpos);
     }
 
     // Make this return true when this Command no longer needs to run execute()

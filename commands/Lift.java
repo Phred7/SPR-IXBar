@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LEDs extends Command {
+public class Lift extends Command {
 
-    public LEDs() {
-        requires(Robot.limelight);
+    public Lift() {
+        requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
@@ -19,11 +19,6 @@ public class LEDs extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    /*	if (Robot.intake.GetSense() == true && Robot.intake.GetSpeed() > 0.1) {
-    		Robot.limelight.Lon();
-    	} else if(Robot.intake.GetSense() == false || Robot.intake.GetSpeed() < 0.1) {
-    		Robot.limelight.Loff();
-    	}*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -8,9 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class LiftDrive extends Command {
-
+	
     public LiftDrive() {
         requires(Robot.lift);
+        
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +20,21 @@ public class LiftDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lift.drive(Robot.oi.getJoystick3Y()/10);
+    	if (Robot.oi.getJoystick1POV() == 0.0) {
+			Robot.lift.stop();
+		} else if (Robot.oi.getJoystick1POV() == 1.0){
+			Robot.lift.drive(1.0);
+		} else if (Robot.oi.getJoystick1POV() == -1.0){
+			Robot.lift.drive(-0.25);
+		} else if (Robot.oi.getJoystick1POV() == 90){
+			Robot.lift.drive(0.5);
+		} else if (Robot.oi.getJoystick1POV() == -90){	
+			Robot.lift.drive(-0.5);
+		} else {
+			Robot.lift.stop();
+		}
+    	
+    	//Robot.lift.drive(Robot.oi.getJoystick3Y()/10);
     }
 
     // Make this return true when this Command no longer needs to run execute()

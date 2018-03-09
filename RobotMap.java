@@ -61,7 +61,7 @@ public class RobotMap {
 	public static int dTELeftReset = 0;
 	public static int dTERightReset = 0;
 	
-	public static final double sensitivity = 0.075;
+	public static final double sensitivity = 0.1;
 	
 	public static boolean cubeTargetTracked = false;
 	public static double azimuthToTarget = 0;
@@ -83,8 +83,8 @@ public class RobotMap {
 	public static final double PIDDriveStraightD = 0.011; //.011 //3.0 (12/23) //8.0(12/23-2)
 	
 	
-	public static final double encoderCountsLeftToIn = 27.851497;//27.675; //29.07(12/23) //27.851497(12-24)
-	public static final double encoderCountsRightToIn = 27.851497; //NEED TO CHANGE BEFORE FINAL! New gbs +gear ration conversion
+	public static final double encoderCountsLeftToIn = 5.634251153907369;//27.675; //29.07(12/23) //27.851497(12-24)
+	public static final double encoderCountsRightToIn = 5.634251153907369; //NEED TO CHANGE BEFORE FINAL! New gbs +gear ration conversion
 	
 	//CONSTANTS FOR TALONS SRX ENCODERS
 	
@@ -102,13 +102,14 @@ public class RobotMap {
 	
 	
 	//LIFT (VELOCITY) //Change to position!!!
-	public static final int kSlotIdxL = 0; //Which PID slot to pull gains from. Starting 2018, you can choose from 0,1,2 or 3. Only the first two (0,1) are visible in web-based configuration.	 
+	public static final int kSlotIdxL = 1; //Which PID slot to pull gains from. Starting 2018, you can choose from 0,1,2 or 3. Only the first two (0,1) are visible in web-based configuration.	 
 	public static final int kPIDLoopIdxL = 0; //Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops. For now we just want the primary one.
 	public static final int kTimeoutMsL = 10; //set to zero to skip waiting for confirmation, set to nonzero to wait andreport to DS if action fails.
 	public static double kFL = 0.1097;
 	public static double kPL = 0.113333;
 	public static double kIL = 0.0;
 	public static double kDL = 0.0;
+	public static double GRL = 1.0;
 	
 	public static void init(){
 		DriveLI = new Spark(0);
@@ -182,9 +183,14 @@ public class RobotMap {
 		IXBar.config_kD(RobotMap.kPIDLoopIdxIX, RobotMap.kDIX, RobotMap.kTimeoutMsIX);
 		
 		m_left = new SpeedControllerGroup(DriveLI, DriveLII);
+		m_left.setInverted(true);
 		m_right = new SpeedControllerGroup(DriveRI, DriveRII);
+		m_right.setInverted(true);
 		
 		driveWC = new DifferentialDrive(m_left, m_right);
+		driveWC.setExpiration(0.1);
+		driveWC.setMaxOutput(1.0);
+		driveWC.setSafetyEnabled(false);
 		
 		leds = new Relay(0);
 		

@@ -18,7 +18,7 @@ public class IntakeDrive extends Command {
     }
 
     protected void execute() {
-    	if(Robot.intake.GetSense() == false) {
+    	/*if(Robot.intake.GetSense() == false) {
     		Robot.intake.intake(this.m_speed);
     	} else if(this.m_speed > 0 && Robot.intake.GetSense() == true) {
     		Robot.intake.Stop();
@@ -26,7 +26,7 @@ public class IntakeDrive extends Command {
     		Robot.intake.intake(this.m_speed);
     	} else {
     		Robot.intake.Stop();
-    	}
+    	}*/
     }
     
     protected boolean isFinished() {

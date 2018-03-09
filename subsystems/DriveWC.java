@@ -93,7 +93,9 @@ public class DriveWC extends Subsystem {
 	}
 	
 	public void tankDrive(double left, double right){
-		driveWC.tankDrive(left, right);
+		Robot.driveWC.driveL(left);
+		Robot.driveWC.driveR(right);
+		//r.set(right);
 	}
 	
 	public void ArcadeSwingLeft(double swing){
@@ -117,7 +119,6 @@ public class DriveWC extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
-    	//setDefaultCommand(new DriveArcade());
     	setDefaultCommand(new DriveTank());
     }
 }
