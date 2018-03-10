@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LEDs extends Command {
+public class LimeTestStraight extends Command {
 
-    public LEDs() {
-        requires(Robot.limelight);
+    public LimeTestStraight() {
+    	requires(Robot.limelight);
     }
 
     // Called just before this Command runs the first time
@@ -19,21 +19,22 @@ public class LEDs extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	/*if (Robot.intake.GetSense() == true && Robot.intake.GetSpeed() > 0.1) {
-    		Robot.limelight.Lon();
-    	} else if(Robot.intake.GetSense() == false || Robot.intake.GetSpeed() < 0.1) {
-    		Robot.limelight.Loff();
-    	}*/
-    	
+    	if(Robot.limelight.getArea()<80) {
+    		Robot.driveWC.drive(0.3, 0.3);
+    	} else if(Robot.limelight.getArea()<90) {
+    		Robot.driveWC.drive(-.15, -.15);
+    	} else
+    		Robot.driveWC.stop();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.limelight.getArea() > 80 && Robot.limelight.getArea() < 90;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.driveWC.stop();
     }
 
     // Called when another command which requires one or more of the same

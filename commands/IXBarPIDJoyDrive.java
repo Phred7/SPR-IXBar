@@ -6,7 +6,10 @@ import org.usfirst.frc.team2906.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class IXBarPIDDrive extends Command {
+/**
+ *
+ */
+public class IXBarPIDJoyDrive extends Command {
 
 	double motorSpeed = 1.0;
 	double error = 0;
@@ -27,10 +30,8 @@ public class IXBarPIDDrive extends Command {
 	double kI = RobotMap.kIIX;
 	double kD = RobotMap.kDIX;
 	
-    public IXBarPIDDrive(double TargetDegs) {
-    	this.TD = TargetDegs;
+    public IXBarPIDJoyDrive() {
     	this.GR = RobotMap.GRIX;
-    	this.TargetTicks = (TD*((12*GR)/(360)));
     	requires(Robot.ixBar);
     	
     }
@@ -54,6 +55,8 @@ public class IXBarPIDDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	TD = (Robot.oi.getJoystick2Y()*120);
+    	this.TargetTicks = (TD*((ticksperrev*GR)/(360)));
     	LD = Robot.ixBar.getCurrentPosition();
     	error = TargetTicks - LD;
     	pAdjustment = (TargetTicks - LD) * kP * RobotMap.PIDDriveStraightGainMultiplier;

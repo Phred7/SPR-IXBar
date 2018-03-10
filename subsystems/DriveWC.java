@@ -72,7 +72,7 @@ public class DriveWC extends Subsystem {
 		l.set(LMotor);
 	}
 	public void driveR(double RMotor) {
-		r.set(-RMotor);
+		r.set(RMotor);
 	}
 
 	public void driveL(double LMotor) {

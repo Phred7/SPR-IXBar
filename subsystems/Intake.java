@@ -2,6 +2,7 @@ package org.usfirst.frc.team2906.robot.subsystems;
 
 import org.usfirst.frc.team2906.robot.Robot;
 import org.usfirst.frc.team2906.robot.RobotMap;
+import org.usfirst.frc.team2906.robot.commands.IntakeDrive;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
@@ -14,10 +15,6 @@ public class Intake extends Subsystem {
 
 	Spark motorR = RobotMap.IntakeR;
 	Spark motorL = RobotMap.IntakeL;
-	
-	public void Intake() {
-		
-	}
 	
 	public void intake(Double speed) {
 		motorR.set(speed);
@@ -54,7 +51,7 @@ public class Intake extends Subsystem {
 	}
 
     public void initDefaultCommand() {
-    	
+    	setDefaultCommand(new IntakeDrive());
     }
 }
 

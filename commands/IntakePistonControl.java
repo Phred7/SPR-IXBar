@@ -7,24 +7,28 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LEDs extends Command {
+public class IntakePistonControl extends Command {
+	
+	double location = 0.0;
 
-    public LEDs() {
-        requires(Robot.limelight);
+    public IntakePistonControl() {
+        requires(Robot.ixBar);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	location = 0.0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	/*if (Robot.intake.GetSense() == true && Robot.intake.GetSpeed() > 0.1) {
-    		Robot.limelight.Lon();
-    	} else if(Robot.intake.GetSense() == false || Robot.intake.GetSpeed() < 0.1) {
-    		Robot.limelight.Loff();
-    	}*/
-    	
+    	if (Robot.ixBar.getVoltage() > 0.0 && Robot.ixBar.getPistonControl() == 1.0) {
+    		location = 1.0;
+    	} else if(Robot.ixBar.getVoltage() <= 0.0 && Robot.ixBar.getPistonControl() == 1.0) {
+    		location = 0.0;
+    	} else if (location == 1.0) {
+    		Robot.pneumatics.Retract();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

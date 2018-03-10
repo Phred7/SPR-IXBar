@@ -7,10 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class IntakeDrive extends Command {
 	
-	double m_speed;
-	
-    public IntakeDrive(double speed) {
-    	this.m_speed = 1 * speed;
+    public IntakeDrive() {
         requires(Robot.intake);
     }
 
@@ -18,15 +15,19 @@ public class IntakeDrive extends Command {
     }
 
     protected void execute() {
-    	/*if(Robot.intake.GetSense() == false) {
-    		Robot.intake.intake(this.m_speed);
-    	} else if(this.m_speed > 0 && Robot.intake.GetSense() == true) {
-    		Robot.intake.Stop();
-    	} else if(this.m_speed < 0 && Robot.intake.GetSense() == true) {
-    		Robot.intake.intake(this.m_speed);
-    	} else {
-    		Robot.intake.Stop();
-    	}*/
+    	if (Robot.oi.getJoystick1POV() == 0.0) {
+			Robot.intake.Stop();
+		} else if (Robot.oi.getJoystick1POV() == 1.0){
+			Robot.intake.intake(1.0);
+		} else if (Robot.oi.getJoystick1POV() == -1.0){
+			Robot.intake.intake(-1.0);
+		} else if (Robot.oi.getJoystick1POV() == 10){
+			Robot.intake.intake(0.5);
+		} else if (Robot.oi.getJoystick1POV() == -10){	
+			Robot.intake.intake(-0.5);
+		} else {
+			Robot.intake.Stop();
+		}
     }
     
     protected boolean isFinished() {

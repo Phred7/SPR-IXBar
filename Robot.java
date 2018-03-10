@@ -99,6 +99,8 @@ public class Robot extends TimedRobot {
 		autoType.addObject("1-Switch, 1-Scale", AutoMode.SWITCHTHENSCALE);
 		autoType.addObject("2-Scale", AutoMode.SCALETWICE);
 		autoType.addObject("1-Switch, 2-Scale", AutoMode.SWITCHTHENSCALETWICE);
+		
+		Robot.ixBar.resetE();
 
 	}
 
@@ -111,7 +113,7 @@ public class Robot extends TimedRobot {
 	}
 
 	public void autonomousInit() {
-		Robot.ixBar.clearE();
+		
 		/*
 		 * m_m_autonomousCommand = (Command) chooser.getSelected();
 		 * System.out.println("Auto selected: " + chooser.getSelected());
@@ -139,9 +141,10 @@ public class Robot extends TimedRobot {
 		position = (AutoPosition) autoPosition.getSelected();
 
 		if (autoModeType == AutoMode.NONE) { // No Auto
-			m_autonomousCommand = new AutoNone();
+			//m_autonomousCommand = new AutoNone();
+			m_autonomousCommand = new LimeTestGroup();
 
-		} else if (position == AutoPosition.II && autoModeType != AutoMode.NONE) { // Position II
+		/*} else if (position == AutoPosition.II && autoModeType != AutoMode.NONE) { // Position II
 			m_autonomousCommand = new AutoPIILine();
 
 		} else if (position == AutoPosition.I && autoModeType != AutoMode.NONE) { // Position I
@@ -291,7 +294,7 @@ public class Robot extends TimedRobot {
 						}
 					}
 				}
-			}
+			}*/
 
 			if (m_autonomousCommand != null) {
 				m_autonomousCommand.start();

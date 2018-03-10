@@ -4,24 +4,26 @@ import org.usfirst.frc.team2906.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ *
+ */
+public class RelayLEDsOn extends Command {
 
-public class RSet extends Command {
-
-    public RSet() {
-        requires(Robot.pneumatics);
+    public RelayLEDsOn() {
+        requires(Robot.limelight);
     }
-
+    
     protected void initialize() {
     }
-
+    
     protected void execute() {
-    	Robot.pneumatics.Retract();
+    	Robot.limelight.Lon();
     }
-
+    
     protected boolean isFinished() {
-        return true;
+        return false;
     }
-
+    
     protected void end() {
     }
 

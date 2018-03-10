@@ -51,7 +51,6 @@ public class RobotMap {
 	public static Encoder DTERight;
 	public static Encoder IXE;
 	public static DoubleSolenoid Extension;
-	public static DoubleSolenoid ExtraIn;
 	public static AHRS navX;
 	public static CameraServer cam1;
 	public static DigitalInput LimIXTop; //Attach magnets to gear/sprocket with epoxy?
@@ -98,7 +97,8 @@ public class RobotMap {
 	public static double kPIX = 0.1;
 	public static double kIIX = 0.0;
 	public static double kDIX = 0.0;
-	public static double GRIX = (42/12); //ex: if you want to move 90degs you would multiplie 90 by 42/12 to get a total movement of the output shaft at 315degs
+	public static double GRIX = (7*5*5); //ex: if you want to move 90degs you would multiplie 90 by 42/12 to get a total movement of the output shaft at 315degs
+	public static double TtoDegIX = (360/(20*GRIX));
 	
 	
 	//LIFT (VELOCITY) //Change to position!!!

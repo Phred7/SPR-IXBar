@@ -2,6 +2,7 @@ package org.usfirst.frc.team2906.robot.subsystems;
 
 import org.usfirst.frc.team2906.robot.Robot;
 import org.usfirst.frc.team2906.robot.RobotMap;
+import org.usfirst.frc.team2906.robot.commands.IntakePistonControl;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -10,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -21,22 +23,16 @@ public class IXBar extends Subsystem {
 	WPI_TalonSRX slave = RobotMap.IXBarSlave;
 	DigitalInput LMT = RobotMap.LimIXTop;
 	DigitalInput LMB = RobotMap.LimIXBottom;
+	DigitalInput PC = RobotMap.LimIXPistonC;
+	Encoder enc = RobotMap.IXE;
 	
-	int Slot = RobotMap.kSlotIdxIX;
-	int LoopID = RobotMap.kPIDLoopIdxIX;
-	int Timeout = RobotMap.kTimeoutMsIX;
-	int sensorPos = 0;
-	
-	boolean Phase = RobotMap.kSensorPhaseIX;
-	boolean Invert = RobotMap.kMotorInvertIX;
 	
 	double kF = RobotMap.kFIX;
 	double kP = RobotMap.kPIX;
 	double kI = RobotMap.kIIX;
 	double kD = RobotMap.kDIX;
 	double GR = RobotMap.GRIX;
-	double iaccum = 0;
-
+	
 	String magT = "MagT";
 	
 	public static final int TOLERANCE = 0;
@@ -78,10 +74,6 @@ public class IXBar extends Subsystem {
 		motor.config_IntegralZone(0, 100, Timeout);
 		*/
 	}
-	
-	public void drivePID(double targetPosition) {
-		motor.set(ControlMode.Position, targetPosition);
-	}
 	public void drive(double speed) {
 		motor.set(speed);
 	}
@@ -93,28 +85,29 @@ public class IXBar extends Subsystem {
 		return 0.0;//IXBar.getMotorOutputVoltage();
 	}
 	
-	public double getCurrentPosition() {
-		return 0.0;
+	public int getCurrentPosition() {
+		return enc.get();
 	}
 	
 	public double getCurrentError() {
 		return 0.0;
 	}
 	
-	public double getTargetDegreees() {
-		return 0.0;
+	public double getPistonControl() {
+		if(PC.get() == true) {
+			return 1.0;
+		} else if(PC.get() == false) {
+			return 0.0;
+		} else
+			return 0.0;
 	}
 	
-	public void clearI() {
-		motor.setIntegralAccumulator(iaccum, 0, 10);
+	public void resetE() {
+		enc.reset();
 	}
-	
-	public void clearE() {
-		motor.setSelectedSensorPosition(sensorPos, 0, 10);
-	}
-	
+
     public void initDefaultCommand() {
-        Robot.ixBar.IXBar();
+        setDefaultCommand(new IntakePistonControl());
     }
 }
 

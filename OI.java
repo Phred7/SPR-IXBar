@@ -7,19 +7,20 @@
 
 package org.usfirst.frc.team2906.robot;
 
-import org.usfirst.frc.team2906.robot.commands.Activate;
-import org.usfirst.frc.team2906.robot.commands.Deactivate;
-import org.usfirst.frc.team2906.robot.commands.DoubleExtendDelay;
-import org.usfirst.frc.team2906.robot.commands.DoubleRetractDelay;
-import org.usfirst.frc.team2906.robot.commands.DriveArcade;
+
 import org.usfirst.frc.team2906.robot.commands.Extend;
 import org.usfirst.frc.team2906.robot.commands.IXBarDrive;
+import org.usfirst.frc.team2906.robot.commands.IXBarPIDDrive;
+import org.usfirst.frc.team2906.robot.commands.IXBarPIDJoyDrive;
 import org.usfirst.frc.team2906.robot.commands.IXBarStop;
 import org.usfirst.frc.team2906.robot.commands.LEDs;
 import org.usfirst.frc.team2906.robot.commands.LiftDrive;
+import org.usfirst.frc.team2906.robot.commands.LiftPositionControl;
 import org.usfirst.frc.team2906.robot.commands.LiftStop;
 import org.usfirst.frc.team2906.robot.commands.LimeLEDsOff;
 import org.usfirst.frc.team2906.robot.commands.LimeLEDsOn;
+import org.usfirst.frc.team2906.robot.commands.RelayLEDsOff;
+import org.usfirst.frc.team2906.robot.commands.RelayLEDsOn;
 import org.usfirst.frc.team2906.robot.commands.Retract;
 import org.usfirst.frc.team2906.robot.commands.Stop;
 
@@ -65,7 +66,52 @@ public class OI {
 		joystick2 = new Joystick(1);
 		joystick3 = new Joystick(2);
 		
-
+		RT = new JoystickButton(joystick1, 8);
+		RT.whileHeld(new LiftDrive());
+		RT.whenReleased(new LiftStop());
+		
+		RB = new JoystickButton(joystick1, 6);
+		RB.whileHeld(new IXBarPIDDrive(10));
+		RB.whenReleased(new IXBarStop());
+		
+		LT = new JoystickButton(joystick1, 7);
+		LT.whenPressed(new LimeLEDsOn());
+		LT.whenPressed(new RelayLEDsOn());
+		
+		LB = new JoystickButton(joystick1, 5);
+		LB.whenPressed(new LimeLEDsOff());
+		LB.whenPressed(new RelayLEDsOff());
+		
+		b = new JoystickButton(joystick1, 3);
+		b.whileHeld(new LiftPositionControl());
+		b.whenReleased(new LiftStop());
+		
+		
+		
+		trigr2 = new JoystickButton(joystick2, 1);
+		trigr2.whileHeld(new IXBarPIDJoyDrive());
+		trigr2.whenReleased(new IXBarStop());
+		
+		B2_2 = new JoystickButton(joystick2, 1);
+		B2_2.whileHeld(new IXBarPIDDrive(40));
+		B2_2.whenReleased(new IXBarStop());
+		
+		B3_2 = new JoystickButton(joystick2, 3);
+		B3_2.whileHeld(new IXBarPIDDrive(10));
+		B3_2.whenReleased(new IXBarStop());
+		
+		B4_2 = new JoystickButton(joystick2, 4);
+		B4_2.whileHeld(new IXBarPIDDrive(100));
+		B4_2.whenReleased(new IXBarStop());
+		
+		
+		
+		trigr3 = new JoystickButton(joystick3, 1);
+		trigr3.whenPressed(new Extend());
+		
+		thumb3 = new JoystickButton(joystick3, 2);
+		thumb3.whenPressed(new Retract());
+		
 		
 		
 	}
@@ -165,18 +211,21 @@ public class OI {
     }
 	
 	public double getJoystick3POV(){
-    	if(joystick3.getPOV(0) == 270){
-    		return -10.0;
-    	} else if(joystick2.getPOV(0) == 90){
-    		return 10.0;
-    	} else if(joystick2.getPOV(0) == 45){
-    		return 0.25;
-    	}else if(joystick2.getPOV(0) == 315){
-    		return -0.25;
-    	} else if(joystick2.getPOV(0) == -1){
+    	if(joystick1.getPOV(0) == 0){
+    		return 1.0;
+    	} else if(joystick1.getPOV(0) == 180){
+    		return -1.0;
+    	} else if(joystick1.getPOV(0) == -1){
     		return 0.0;
-    	}
-    	else{
+    	} else if(joystick2.getPOV(0) == 135){
+    		return -10.0;
+    	} else if(joystick2.getPOV(0) == 225){
+    		return -10.0;
+    	} else if(joystick2.getPOV(0) == 45){
+    		return 10;
+    	} else if(joystick2.getPOV(0) == 315){
+    		return 10;
+    	} else{
     		return 0.0;
     	}
     }
