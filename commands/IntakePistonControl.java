@@ -24,10 +24,9 @@ public class IntakePistonControl extends Command {
     protected void execute() {
     	if (Robot.ixBar.getVoltage() > 0.0 && Robot.ixBar.getPistonControl() == 1.0) {
     		location = 1.0;
-    	} else if(Robot.ixBar.getVoltage() <= 0.0 && Robot.ixBar.getPistonControl() == 1.0) {
-    		location = 0.0;
     	} else if (location == 1.0) {
     		Robot.pneumatics.Retract();
+    		location = 0.0;
     	}
     }
 

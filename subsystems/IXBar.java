@@ -36,7 +36,7 @@ public class IXBar extends Subsystem {
 	String magT = "MagT";
 	
 	public static final int TOLERANCE = 0;
-	public static final double F = 0.0, P = 0.1, I = 0.0, D = 0.0; 
+	public static final double F = 0.0, P = 0.01, I = 0.0, D = 0.0; 
 	
 	public void IXBar() {
 		/*//motor.configForwardLimitSwitchSource(LimitSwitchSource.valueOf(magT), LimitSwitchNormal.NormallyOpen, );

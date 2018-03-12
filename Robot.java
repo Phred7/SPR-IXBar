@@ -59,14 +59,21 @@ public class Robot extends TimedRobot {
 	};
 
 	public static enum AutoMode {
-		NONE, SWITCH, SCALE, SWITCHTHENSCALE, LINE, SWITCHTHENSCALETWICE, SCALETWICE, AUTOSELECTEDBASEDONRANDOMIZATION
+		NONE, SWITCH, SCALE, SWITCHTHENSCALE, LINE, SWITCHTHENSCALETWICE, SCALETWICE
 	};
+	
+	public static enum AutoOP {
+		FALSE, TRUE
+	}
 
 	static AutoPosition position;
 	static AutoMode autoModeType;
+	static AutoOP autoOpposite;
 
 	SendableChooser<AutoPosition> autoPosition;
 	SendableChooser<AutoMode> autoType;
+	SendableChooser<AutoOP> autoOP;
+	
 
 	public void robotInit() {
 		RobotMap.init();
@@ -82,6 +89,7 @@ public class Robot extends TimedRobot {
 
 		autoType = new SendableChooser<AutoMode>();
 		autoPosition = new SendableChooser<AutoPosition>();
+		autoOP = new SendableChooser<AutoOP>();
 
 		SmartDashboard.putData("Auto Action", autoType);
 		SmartDashboard.putData("Robot Position", autoPosition);
@@ -92,13 +100,17 @@ public class Robot extends TimedRobot {
 		autoPosition.addObject("III", AutoPosition.III);
 
 		autoType.addDefault("None", AutoMode.NONE);
-		autoType.addObject("Auto Selected", AutoMode.AUTOSELECTEDBASEDONRANDOMIZATION);
 		autoType.addObject("Line", AutoMode.LINE);
 		autoType.addObject("1-Switch", AutoMode.SWITCH);
 		autoType.addObject("1-Scale", AutoMode.SCALE);
 		autoType.addObject("1-Switch, 1-Scale", AutoMode.SWITCHTHENSCALE);
 		autoType.addObject("2-Scale", AutoMode.SCALETWICE);
 		autoType.addObject("1-Switch, 2-Scale", AutoMode.SWITCHTHENSCALETWICE);
+		
+		autoOP.addDefault("False", AutoOP.FALSE);
+		autoOP.addObject("True", AutoOP.TRUE);
+		
+		SmartDashboard.putData("LEDoff", new LimeLEDsOff());
 		
 		Robot.ixBar.resetE();
 
@@ -139,29 +151,148 @@ public class Robot extends TimedRobot {
 
 		autoModeType = (AutoMode) autoType.getSelected();
 		position = (AutoPosition) autoPosition.getSelected();
+		autoOpposite = (AutoOP) autoOP.getSelected();
 
-		if (autoModeType == AutoMode.NONE) { // No Auto
-			//m_autonomousCommand = new AutoNone();
-			m_autonomousCommand = new LimeTestGroup();
+		if(gameData.length() > 0) {
+			
+			if (autoModeType == AutoMode.NONE) { // No Auto
+			m_autonomousCommand = new AutoNone();
+			//m_autonomousCommand = new LimeTestGroup();
 
-		/*} else if (position == AutoPosition.II && autoModeType != AutoMode.NONE) { // Position II
-			m_autonomousCommand = new AutoPIILine();
-
-		} else if (position == AutoPosition.I && autoModeType != AutoMode.NONE) { // Position I
-			if (autoModeType == AutoMode.AUTOSELECTEDBASEDONRANDOMIZATION) { // Random
-				if (gameData.contentEquals("LLL")) {
-					m_autonomousCommand = new AutoPISwitch();
-					// m_autonomousCommand = new AutoPISwitchThenScale();
-				} else if (gameData.contentEquals("RRR")) {
-					m_autonomousCommand = new AutoLine();
-					// m_autonomousCommand = new AutoPISwitchOp();
-				} else if (gameData.contentEquals("LRL")) {
-					m_autonomousCommand = new AutoPISwitch();
-				} else if (gameData.contentEquals("RLR")) {
-					m_autonomousCommand = new AutoLine();
-					// m_autonomousCommand = new AutoPIScale();
+			} else if (position == AutoPosition.II && autoModeType != AutoMode.NONE) { // Position II
+				if (gameData.contentEquals("LLL") || gameData.contentEquals("LRL")) {
+					if(autoModeType == AutoMode.LINE) {
+						m_autonomousCommand = new AutoPIILine();
+					}else if (autoModeType != AutoMode.LINE && autoModeType != AutoMode.NONE) {
+						m_autonomousCommand = new AutoPIILeft();
+					}
+				} else if (gameData.contentEquals("RRR") || gameData.contentEquals("RLR")) {
+					if(autoModeType == AutoMode.LINE) {
+						m_autonomousCommand = new AutoPIILine();
+					} else if(autoModeType != AutoMode.LINE && autoModeType != AutoMode.NONE) {
+						m_autonomousCommand = new AutoPIIRight();
+					}
 				}
-			} else if (autoModeType != AutoMode.AUTOSELECTEDBASEDONRANDOMIZATION) { // Chooser
+			} else if (position == AutoPosition.I && autoModeType != AutoMode.NONE) { // Position I
+				if (gameData.contentEquals("LLL")) {
+					if(autoModeType == AutoMode.LINE) {
+						m_autonomousCommand = new AutoLine();
+					}else if (autoModeType == AutoMode.SWITCH) {
+						m_autonomousCommand = new AutoPISwitch();
+					}else if (autoModeType == AutoMode.SWITCHTHENSCALE) {
+						m_autonomousCommand = new AutoPISwitchThenScale();
+					}else if (autoModeType == AutoMode.SWITCHTHENSCALETWICE) {
+						m_autonomousCommand = new AutoPISwitchThenScaleTwice();
+					}else if (autoModeType == AutoMode.SCALETWICE) {		
+						m_autonomousCommand = new AutoPIScaleTwice();
+					}
+					
+				} else if (gameData.contentEquals("RRR")) {
+					if(autoModeType == AutoMode.LINE) {
+						m_autonomousCommand = new AutoLine();
+					} else if (autoOpposite == AutoOP.TRUE) {
+							if (autoModeType == AutoMode.SWITCH) {
+								m_autonomousCommand = new AutoPISwitchOp();
+							}else if (autoModeType == AutoMode.SWITCHTHENSCALE) {
+								m_autonomousCommand = new AutoPISwitchOpThenScaleOp();
+							}else if (autoModeType == AutoMode.SWITCHTHENSCALETWICE) {
+								m_autonomousCommand = new AutoPISwitchOpThenScaleOp();
+							}else if (autoModeType == AutoMode.SCALETWICE) {		
+								m_autonomousCommand = new AutoPIScaleTwiceOp();
+							}
+					}
+				} else if (gameData.contentEquals("LRL")) {
+					if(autoModeType == AutoMode.LINE) {
+						m_autonomousCommand = new AutoLine();
+					}else if (autoModeType == AutoMode.SWITCH) {
+						m_autonomousCommand = new AutoPISwitch();
+					}else if (autoOpposite == AutoOP.TRUE) {	
+						if (autoModeType == AutoMode.SWITCHTHENSCALE) {
+							m_autonomousCommand = new AutoPISwitchThenScaleOp();
+						}else if (autoModeType == AutoMode.SWITCHTHENSCALETWICE) {
+							m_autonomousCommand = new AutoPISwitchThenScaleOp();
+						}else if (autoModeType == AutoMode.SCALETWICE) {		
+							m_autonomousCommand = new AutoPIScaleTwiceOp();
+						}
+					}
+				} else if (gameData.contentEquals("RLR")) {
+					if(autoModeType == AutoMode.LINE) {
+						m_autonomousCommand = new AutoLine();
+					}else if (autoModeType == AutoMode.SCALETWICE) {		
+						m_autonomousCommand = new AutoPIScaleTwice();
+					}else if (autoOpposite == AutoOP.TRUE) {
+						if(autoModeType == AutoMode.SWITCH) {
+							m_autonomousCommand = new AutoPISwitchOp();
+						}else if (autoModeType == AutoMode.SWITCHTHENSCALE) {
+							m_autonomousCommand = new AutoPISwitchOp();
+						}else if (autoModeType == AutoMode.SWITCHTHENSCALETWICE) {
+							m_autonomousCommand = new AutoPISwitchOp();
+						}
+					}
+				}
+					
+			} else if (position == AutoPosition.III && autoModeType != AutoMode.NONE) { // Position III
+				if (gameData.contentEquals("RRR")) {
+					if(autoModeType == AutoMode.LINE) {
+						m_autonomousCommand = new AutoLine();
+					}else if (autoModeType == AutoMode.SWITCH) {
+						m_autonomousCommand = new AutoPIIISwitch();
+					}else if (autoModeType == AutoMode.SWITCHTHENSCALE) {
+						m_autonomousCommand = new AutoPIIISwitchThenScale();
+					}else if (autoModeType == AutoMode.SWITCHTHENSCALETWICE) {
+						m_autonomousCommand = new AutoPIIISwitchThenScaleTwice();
+					}else if (autoModeType == AutoMode.SCALETWICE) {		
+						m_autonomousCommand = new AutoPIIIScaleTwice();
+					}
+					
+				} else if (gameData.contentEquals("LLL")) {
+					if(autoModeType == AutoMode.LINE) {
+						m_autonomousCommand = new AutoLine();
+					} else if (autoOpposite == AutoOP.TRUE) {
+							if (autoModeType == AutoMode.SWITCH) {
+								m_autonomousCommand = new AutoPIIISwitchOp();
+							}else if (autoModeType == AutoMode.SWITCHTHENSCALE) {
+								m_autonomousCommand = new AutoPIIISwitchOpThenScaleOp();
+							}else if (autoModeType == AutoMode.SWITCHTHENSCALETWICE) {
+								m_autonomousCommand = new AutoPIIISwitchOpThenScaleOp();
+							}else if (autoModeType == AutoMode.SCALETWICE) {		
+								m_autonomousCommand = new AutoPIIIScaleTwiceOp();
+							}
+					}
+				} else if (gameData.contentEquals("RLR")) {
+					if(autoModeType == AutoMode.LINE) {
+						m_autonomousCommand = new AutoLine();
+					}else if (autoModeType == AutoMode.SWITCH) {
+						m_autonomousCommand = new AutoPIIISwitch();
+					}else if (autoOpposite == AutoOP.TRUE) {	
+						if (autoModeType == AutoMode.SWITCHTHENSCALE) {
+							m_autonomousCommand = new AutoPIIISwitchThenScaleOp();
+						}else if (autoModeType == AutoMode.SWITCHTHENSCALETWICE) {
+							m_autonomousCommand = new AutoPIIISwitchThenScaleOp();
+						}else if (autoModeType == AutoMode.SCALETWICE) {		
+							m_autonomousCommand = new AutoPIIIScaleTwiceOp();
+						}
+					}
+				} else if (gameData.contentEquals("LRL")) {
+					if(autoModeType == AutoMode.LINE) {
+						m_autonomousCommand = new AutoLine();
+					}else if (autoModeType == AutoMode.SCALETWICE) {		
+						m_autonomousCommand = new AutoPIIIScaleTwice();
+					}else if (autoOpposite == AutoOP.TRUE) {
+						if(autoModeType == AutoMode.SWITCH) {
+							m_autonomousCommand = new AutoPIIISwitchOp();
+						}else if (autoModeType == AutoMode.SWITCHTHENSCALE) {
+							m_autonomousCommand = new AutoPIIISwitchOp();
+						}else if (autoModeType == AutoMode.SWITCHTHENSCALETWICE) {
+							m_autonomousCommand = new AutoPIIISwitchOp();
+						}
+					}
+				}
+			}
+	
+		
+		
+		/*	} else if (autoModeType != AutoMode.AUTOSELECTEDBASEDONRANDOMIZATION) { // Chooser
 				if (gameData.contentEquals("LLL")) {
 					if (autoModeType == AutoMode.LINE) {
 						m_autonomousCommand = new AutoLine();
@@ -292,10 +423,10 @@ public class Robot extends TimedRobot {
 						} else if (autoModeType == AutoMode.SCALETWICE) {
 							m_autonomousCommand = new AutoPIIIScaleTwiceOp();
 						}
-					}
-				}
-			}*/
+					}*/ 
+				
 
+			//get selected to smartdashboard here!
 			if (m_autonomousCommand != null) {
 				m_autonomousCommand.start();
 			}

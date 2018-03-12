@@ -48,7 +48,7 @@ public class Lift extends Subsystem {
 		motor.configPeakOutputForward(1, kTimeout);
 		motor.configPeakOutputReverse(-.25, kTimeout);
 
-		motor.configAllowableClosedloopError(500, kPIDLoop, kTimeout);
+		//motor.configAllowableClosedloopError(0, kPIDLoop, kTimeout);
 
 		motor.config_kP(kPIDLoop, kP, kTimeout);
 		motor.config_kI(kPIDLoop, kI, kTimeout);

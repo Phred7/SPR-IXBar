@@ -71,8 +71,8 @@ public class OI {
 		RT.whenReleased(new LiftStop());
 		
 		RB = new JoystickButton(joystick1, 6);
-		RB.whileHeld(new IXBarPIDDrive(10));
-		RB.whenReleased(new IXBarStop());
+		RB.whileHeld(new IXBarPIDDrive(3));
+		RB.whenReleased(new IXBarPIDDrive(0.0001));
 		
 		LT = new JoystickButton(joystick1, 7);
 		LT.whenPressed(new LimeLEDsOn());
@@ -90,19 +90,23 @@ public class OI {
 		
 		trigr2 = new JoystickButton(joystick2, 1);
 		trigr2.whileHeld(new IXBarPIDJoyDrive());
-		trigr2.whenReleased(new IXBarStop());
+		trigr2.whenReleased(new IXBarPIDDrive(0.0001));
+		//trigr2.whenReleased(new IXBarStop());
 		
 		B2_2 = new JoystickButton(joystick2, 1);
-		B2_2.whileHeld(new IXBarPIDDrive(40));
-		B2_2.whenReleased(new IXBarStop());
+		B2_2.whileHeld(new IXBarPIDDrive(10));
+		B2_2.whenReleased(new IXBarPIDDrive(0.0001));
+		//B2_2.whenReleased(new IXBarStop());
 		
 		B3_2 = new JoystickButton(joystick2, 3);
-		B3_2.whileHeld(new IXBarPIDDrive(10));
-		B3_2.whenReleased(new IXBarStop());
+		B3_2.whileHeld(new IXBarPIDDrive(5));
+		B3_2.whenReleased(new IXBarPIDDrive(0.0001));
+		//B3_2.whenReleased(new IXBarStop());
 		
 		B4_2 = new JoystickButton(joystick2, 4);
-		B4_2.whileHeld(new IXBarPIDDrive(100));
-		B4_2.whenReleased(new IXBarStop());
+		B4_2.whileHeld(new IXBarPIDDrive(20));
+		B4_2.whenReleased(new IXBarPIDDrive(0.0001));
+		//B4_2.whenReleased(new IXBarStop());
 		
 		
 		

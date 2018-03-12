@@ -94,7 +94,7 @@ public class RobotMap {
 	public static boolean kSensorPhaseIX = true; //choose so that Talon does not report sensor out of phase
 	public static boolean kMotorInvertIX = false; // choose based on what direction you want to be positive,this does not affect motor invert. 
 	public static double kFIX = 0.0; //typically remains 0
-	public static double kPIX = 0.1;
+	public static double kPIX = 0.01;
 	public static double kIIX = 0.0;
 	public static double kDIX = 0.0;
 	public static double GRIX = (7*5*5); //ex: if you want to move 90degs you would multiplie 90 by 42/12 to get a total movement of the output shaft at 315degs
@@ -102,11 +102,11 @@ public class RobotMap {
 	
 	
 	//LIFT (VELOCITY) //Change to position!!!
-	public static final int kSlotIdxL = 1; //Which PID slot to pull gains from. Starting 2018, you can choose from 0,1,2 or 3. Only the first two (0,1) are visible in web-based configuration.	 
+	public static final int kSlotIdxL = 3; //Which PID slot to pull gains from. Starting 2018, you can choose from 0,1,2 or 3. Only the first two (0,1) are visible in web-based configuration.	 
 	public static final int kPIDLoopIdxL = 0; //Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops. For now we just want the primary one.
 	public static final int kTimeoutMsL = 10; //set to zero to skip waiting for confirmation, set to nonzero to wait andreport to DS if action fails.
-	public static double kFL = 0.1097;
-	public static double kPL = 0.113333;
+	public static double kFL = 0.0;
+	public static double kPL = 0.0;
 	public static double kIL = 0.0;
 	public static double kDL = 0.0;
 	public static double GRL = 1.0;
@@ -183,7 +183,7 @@ public class RobotMap {
 		IXBar.config_kD(RobotMap.kPIDLoopIdxIX, RobotMap.kDIX, RobotMap.kTimeoutMsIX);
 		
 		m_left = new SpeedControllerGroup(DriveLI, DriveLII);
-		m_left.setInverted(true);
+		m_left.setInverted(false);
 		m_right = new SpeedControllerGroup(DriveRI, DriveRII);
 		m_right.setInverted(true);
 		
